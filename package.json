@@ -1,0 +1,33 @@
+{
+  "name": "bali-code-examples",
+  "version": "2.0.0",
+  "description": "This project defines the interface to, and various implementations of, the Bali Document Repository™.",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/craterdog-bali/js-bali-code-examples.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "NodeJS",
+    "Bali Nebula",
+    "Bali Component Framework",
+    "Bali Document Notation",
+    "Bali Digital Notary"
+  ],
+  "author": "Derk Norton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/craterdog-bali/js-bali-code-examples/issues"
+  },
+  "homepage": "https://github.com/craterdog-bali/js-bali-code-examples#readme",
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-eslint": "^22.0.0",
+    "grunt-exec": "^3.0.0"
+  },
+  "dependencies": {
+    "bali-component-framework": "^2.2.2",
+    "bali-digital-notary": "^2.3.0"
+  }
+}
