@@ -1,6 +1,6 @@
 {
   "name": "bali-code-examples",
-  "version": "2.0.1",
+  "version": "2.0.0",
   "description": "This project defines the interface to, and various implementations of, the Bali Document Repository™.",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "grunt-exec": "^3.0.0"
   },
   "dependencies": {
-    "bali-component-framework": "^2.2.4",
-    "bali-digital-notary": "^2.3.2"
+    "bali-component-framework": "^2.3.0",
+    "bali-digital-notary": "^2.4.0"
   }
 }

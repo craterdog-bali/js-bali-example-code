@@ -3,9 +3,7 @@ const debug = 1;  // debug level: [0..3]
 const bali = require('bali-component-framework').api(debug);
 const account = bali.tag();  // new account
 const directory = 'config/';
-const api = require('bali-digital-notary');
-const securityModule = api.ssm(directory, debug);
-const notary = api.notary(securityModule, account, directory, debug);
+const notary = require('bali-digital-notary').test(account, directory, debug);
 
 // wrap the test in an asynchronous function
 const test = async function() {
