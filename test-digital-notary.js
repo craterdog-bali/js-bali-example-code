@@ -47,7 +47,7 @@ transaction = await notary.notarizeDocument(transaction);
 console.log(transaction.toString());
 
 // prove the notarized transaction is authentic using the public key
-var result = await notary.validDocument(transaction, publicKey);
+var result = await notary.validDocument(transaction, certificate);
 console.log(result);
 
 // generate a document citation for the notarized transaction
