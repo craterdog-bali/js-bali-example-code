@@ -40,6 +40,11 @@ module.exports = function(grunt) {
         command: 'node test-digital-notary.js',
         stdout: true,
         stderr: true
+      },
+      repository: {
+        command: 'node test-document-repository.js',
+        stdout: true,
+        stderr: true
       }
     }
 
@@ -51,6 +56,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('framework', 'Test the component framework example code.', ['clean:build', 'eslint', 'exec:framework']);
   grunt.registerTask('notary', 'Test the digital notary example code.', ['clean:build', 'eslint', 'exec:notary']);
-  grunt.registerTask('default', 'Test all example code.', ['clean:build', 'eslint', 'exec:framework', 'exec:notary']);
+  grunt.registerTask('repository', 'Test the document repository example code.', ['clean:build', 'eslint', 'exec:repository']);
+  grunt.registerTask('default', 'Test all example code.', ['clean:build', 'eslint', 'exec:framework', 'exec:notary', 'clean:build', 'exec:repository']);
 
 };

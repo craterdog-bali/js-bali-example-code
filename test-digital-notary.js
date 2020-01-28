@@ -2,7 +2,7 @@
 const debug = 1;  // debug level: [0..3]
 const bali = require('bali-component-framework').api(debug);
 const account = bali.tag();  // new account
-const directory = 'config/';
+const directory = 'config/';  // for testing purposes only
 const notary = require('bali-digital-notary').test(account, directory, debug);
 
 // wrap the test in an asynchronous function
@@ -53,7 +53,7 @@ console.log(result);
 // generate a document citation for the notarized transaction
 citation = await notary.citeDocument(transaction);
 
-// print the transaction ciation to the console as a document
+// print the transaction citation to the console as a document
 console.log(citation.toString());
 
 // prove the notarized document matches the document citation
