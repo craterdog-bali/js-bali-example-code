@@ -7,31 +7,35 @@ const notary = require('bali-digital-notary').test(account, directory, debug);
 
 // wrap the test in an asynchronous function
 const test = async function() {
+console.log();
 
 // generate a new notary key and associated public key
 const publicKey = await notary.generateKey();
 
 // print the public key to the console as a document
-console.log(publicKey.toString());
+console.log('public key: ' + publicKey);
+console.log();
 
 // notarize the public key to create the notary certificate
 const certificate = await notary.notarizeDocument(publicKey);
 
 // print the notarized certificate to the console as a document
-console.log(certificate.toString());
+console.log('certificate: ' + certificate);
+console.log();
 
 // activate the notary key using its certificate
 var citation = await notary.activateKey(certificate);
 
 // print the certificate citation to the console as a document
-console.log(citation.toString());
+console.log('certificate citation: ' + citation);
+console.log();
 
 // create a transaction
 var transaction = bali.catalog({
     $timestamp: bali.moment(),  // now
     $consumer: bali.text('Derk Norton'),
     $merchant: bali.reference('https://www.starbucks.com/'),
-    $amount: 4.95
+    $amount: bali.component('4.95($currency: $USD)')
 }, {
     $type: bali.component('/starbucks/types/Transaction/v2.3'),
     $tag: bali.tag(),
@@ -44,21 +48,25 @@ var transaction = bali.catalog({
 transaction = await notary.notarizeDocument(transaction);
 
 // print the notarized transaction to the console as a document
-console.log(transaction.toString());
+console.log('transaction: ' + transaction);
+console.log();
 
 // prove the notarized transaction is authentic using the public key
-var result = await notary.validDocument(transaction, certificate);
-console.log(result);
+const isValid = await notary.validDocument(transaction, certificate);
+console.log('is valid: ' + isValid);
+console.log();
 
 // generate a document citation for the notarized transaction
 citation = await notary.citeDocument(transaction);
 
 // print the transaction citation to the console as a document
-console.log(citation.toString());
+console.log('transaction citation: ' + citation);
+console.log();
 
 // prove the notarized document matches the document citation
-result = await notary.citationMatches(citation, transaction);
-console.log(result);
+const citationMatches = await notary.citationMatches(citation, transaction);
+console.log('citation matches: ' + citationMatches);
+console.log();
 
 };
 
