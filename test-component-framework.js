@@ -3,7 +3,7 @@ const debug = 1;  // debug level: [0..3]
 const bali = require('bali-component-framework').api(debug);
 
 // construct a transaction component from a javascript object
-const transaction = bali.catalog({
+const catalog = bali.catalog({
     transaction: bali.tag(),  // generate a new unique tag
     timestamp: bali.moment(),  // now
     consumer: bali.text('Derk Norton'),
@@ -13,11 +13,11 @@ const transaction = bali.catalog({
 console.log();
 
 // print it to the console as a Bali document
-console.log('transaction: ' + transaction);
+console.log('catalog: ' + catalog);
 console.log();
 
 // create a list containing the the keys from the transaction
-const list = bali.list(transaction.getKeys());
+const list = bali.list(catalog.getKeys());
 
 // print the list to the console as a Bali document
 console.log('list: ' + list);
@@ -38,14 +38,14 @@ console.log('sorted list: ' + list);
 console.log();
 
 // sort the associations in the transaction
-transaction.sortItems();
+catalog.sortItems();
 
 // print the sorted transaction to the console as a Bali document
-console.log('sorted transaction: ' + transaction);
+console.log('sorted catalog: ' + catalog);
 console.log();
 
 // compare the sorted list with the keys from the sorted transaction
-const keys = transaction.getKeys();
+const keys = catalog.getKeys();
 const areEqual = keys.isEqualTo(list);
 console.log('are equal: ' + areEqual);
 console.log();
