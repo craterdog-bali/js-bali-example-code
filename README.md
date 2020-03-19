@@ -1,5 +1,5 @@
 ## The Bali Nebula™ Example Code (v2)
-![Logo](CraterDogLogo.png)
+<img src="https://craterdog.com/images/CraterDogLogo.png" width="50%">
 
 ### Overview
 This project contains the example code found in the [Bali Nebula™](https://github.com/craterdog-bali)
