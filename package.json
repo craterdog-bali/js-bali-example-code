@@ -21,14 +21,14 @@
   },
   "homepage": "https://github.com/craterdog-bali/js-bali-code-examples#readme",
   "devDependencies": {
-    "grunt": "^1.0.4",
+    "grunt": "^1.1.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-eslint": "^22.0.0",
     "grunt-exec": "^3.0.0"
   },
   "dependencies": {
-    "bali-component-framework": "^2.8.0",
-    "bali-digital-notary": "^2.10.4",
-    "bali-document-repository": "^2.24.8"
+    "bali-component-framework": "^2.9.0",
+    "bali-digital-notary": "^2.10.5",
+    "bali-document-repository": "^2.24.9"
   }
 }
