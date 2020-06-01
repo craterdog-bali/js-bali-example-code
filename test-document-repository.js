@@ -4,7 +4,9 @@ const bali = require('bali-component-framework').api(debug);
 const account = bali.tag();  // new account
 const directory = 'config/';  // for testing purposes only
 const notary = require('bali-digital-notary').test(account, directory, debug);
-const repository = require('bali-document-repository').test(notary, directory, debug);
+const Repository = require('bali-document-repository');
+const storage = Repository.local(notary, directory, debug);
+const repository = Repository.repository(notary, storage, debug);
 
 // wrap the test in an asynchronous function
 const test = async function() {
@@ -18,56 +20,44 @@ console.log('certificate: ' + certificate);
 console.log();
 
 // commit the notarized public certificate to the document repository
-await repository.writeDocument(certificate);
+await storage.writeContract(certificate);
 
-// create a notarized draft document
-var profile = bali.catalog({
+// create a document
+var document = bali.instance('/acme/types/Profile/v1', {
     $name: 'Jane Doe',
     $age: 30,
-    $email: bali.reference('mailto:jane.doe@gmail.com')
-}, {
-    $type: '/bali/examples/Profile/v1',
-    $tag: bali.tag(),  // new random document tag
-    $version: bali.version(),  // initial version of the document (v1)
-    $permissions: '/bali/permissions/private/v1',
-    $previous: bali.pattern.NONE  // no previous version of the document
+    $email: bali.reference('mailto:jane.doe@acme.org')
 });
-var draft = await notary.notarizeDocument(profile);
-console.log('draft: ' + draft);
+console.log('document: ' + document);
 console.log();
 
-// save the draft document to the document repository
-var citation = await repository.writeDraft(draft);
+// save the document to the document repository
+var citation = await repository.saveDocument(document);
 console.log('citation: ' + citation);
 console.log();
 
-// update the draft document
-draft = await repository.readDraft(citation);
-profile = draft.getValue('$content');
-profile.setValue('$age', 29);
-draft = await notary.notarizeDocument(profile);
-console.log('draft: ' + draft);
+// update the saved document
+document = await repository.retrieveDocument(citation);
+document.setValue('$age', 29);
+console.log('document: ' + document);
 console.log();
 
-// save the updated draft document to the document repository
-await repository.writeDraft(draft);
-
-// commit the draft document to the document repository (permanently)
-citation = await repository.writeDocument(draft);
+// save the updated document to the document repository
+citation = await repository.saveDocument(document);
 console.log('citation: ' + citation);
 console.log();
 
-// verify that the draft is no longer in the repository
-const draftExists = await repository.draftExists(citation)
-console.log('draft exists: ' + draftExists);
+// commit the document to the document repository as a signed contract
+const name = '/acme/profiles/jane/v1';
+await repository.commitDocument(name, document);
+
+// retrieve the contract from the repository by name
+const contract = await repository.retrieveContract(name);
+console.log('contract: ' + contract);
 console.log();
 
-// name the document in the repository
-const name = bali.component('/acme/profiles/JaneDoe/v1');
-await repository.writeName(name, citation);
-
-// retrieve the document from the repository by name
-document = await repository.readName(name);
+// show the unsigned document no longer exists in the repository
+document = await repository.retrieveDocument(citation);
 console.log('document: ' + document);
 console.log();
 };

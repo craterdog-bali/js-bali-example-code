@@ -31,7 +31,7 @@ console.log('certificate citation: ' + citation);
 console.log();
 
 // create a transaction
-const catalog = bali.catalog({
+const transaction = bali.catalog({
     $timestamp: bali.moment(),  // now
     $consumer: bali.text('Derk Norton'),
     $merchant: bali.reference('https://www.starbucks.com/'),
@@ -45,14 +45,14 @@ const catalog = bali.catalog({
 });
 
 // notarize the transaction with the private notary key
-const transaction = await notary.notarizeDocument(catalog);
+const contract = await notary.notarizeDocument(transaction);
 
 // print the notarized transaction to the console as a document
-console.log('transaction: ' + transaction);
+console.log('contract: ' + contract);
 console.log();
 
 // prove the notarized transaction is authentic using the public key
-const isValid = await notary.validDocument(transaction, certificate);
+const isValid = await notary.validContract(contract, certificate);
 console.log('is valid: ' + isValid);
 console.log();
 
