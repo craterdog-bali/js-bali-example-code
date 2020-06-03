@@ -9,40 +9,38 @@ const notary = require('bali-digital-notary').test(account, directory, debug);
 const test = async function() {
 console.log();
 
-// generate a new notary key and associated public key
-const publicKey = await notary.generateKey();
+// generate a new notary key and associated public certificate
+var certificate = await notary.generateKey();
 
-// print the public key to the console as a document
-console.log('public key: ' + publicKey);
+// print the public certificate to the console
+console.log('public certificate: ' + certificate);
 console.log();
 
-// notarize the public key to create the notary certificate
-const certificate = await notary.notarizeDocument(publicKey);
+// notarize the public certificate
+certificate = await notary.notarizeDocument(certificate);
 
-// print the notarized certificate to the console as a document
-console.log('certificate: ' + certificate);
+// print the notarized certificate to the console
+console.log('notarized certificate: ' + certificate);
 console.log();
 
-// activate the notary key using its certificate
+// activate the notary key using its notarized certificate
 var citation = await notary.activateKey(certificate);
 
-// print the certificate citation to the console as a document
+// print the resulting certificate citation to the console
 console.log('certificate citation: ' + citation);
 console.log();
 
-// create a transaction
-const transaction = bali.catalog({
+// create a transaction document
+const transaction = bali.instance('/starbucks/types/Transaction/v2.3', {
     $timestamp: bali.moment(),  // now
-    $consumer: bali.text('Derk Norton'),
-    $merchant: bali.reference('https://www.starbucks.com/'),
-    $amount: bali.component('4.95($currency: $USD)')
-}, {
-    $type: bali.component('/starbucks/types/Transaction/v2.3'),
-    $tag: bali.tag(),
-    $version: bali.version(),
-    $permissions: bali.component('/bali/permissions/Public/v1'),
-    $previous: bali.NONE
+    $consumer: 'Derk Norton',
+    $merchant: '<https://www.starbucks.com/>',
+    $amount: '4.95($currency: $USD)'
 });
+
+// print the transaction document to the console
+console.log('transaction: ' + transaction);
+console.log();
 
 // notarize the transaction with the private notary key
 const contract = await notary.notarizeDocument(transaction);
@@ -51,7 +49,7 @@ const contract = await notary.notarizeDocument(transaction);
 console.log('contract: ' + contract);
 console.log();
 
-// prove the notarized transaction is authentic using the public key
+// prove the notarized transaction is authentic using the public certificate
 const isValid = await notary.validContract(contract, certificate);
 console.log('is valid: ' + isValid);
 console.log();
