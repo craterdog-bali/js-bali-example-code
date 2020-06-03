@@ -39,6 +39,8 @@ console.log();
 // update the saved document
 document = await repository.retrieveDocument(citation);
 document.setValue('$age', 29);
+document.setParameter('$version', 'v1.1');
+document.setParameter('$previous', citation);
 console.log('document: ' + document);
 console.log();
 
@@ -52,7 +54,7 @@ const name = '/acme/profiles/jane/v1';
 await repository.commitDocument(name, document);
 
 // retrieve the contract from the repository by name
-const contract = await repository.retrieveContract(name);
+const contract = await storage.readContract(citation);
 console.log('contract: ' + contract);
 console.log();
 
