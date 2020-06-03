@@ -13,13 +13,11 @@ const test = async function() {
 console.log();
 
 // initialize the digital notary
-const publicKey = await notary.generateKey();
-const certificate = await notary.notarizeDocument(publicKey);
+var certificate = await notary.generateKey();
+certificate = await notary.notarizeDocument(certificate);
 await notary.activateKey(certificate);
 console.log('certificate: ' + certificate);
 console.log();
-
-// commit the notarized public certificate to the document repository
 await storage.writeContract(certificate);
 
 // create a document
@@ -49,18 +47,18 @@ citation = await repository.saveDocument(document);
 console.log('citation: ' + citation);
 console.log();
 
-// commit the document to the document repository as a signed contract
+// commit the document to the document repository as a notarized contract
 const name = '/acme/profiles/jane/v1';
 await repository.commitDocument(name, document);
 
-// retrieve the contract from the repository by name
-const contract = await storage.readContract(citation);
-console.log('contract: ' + contract);
+// retrieve the named document from the repository
+document = await repository.retrieveDocument(name);
+console.log('document: ' + document);
 console.log();
 
-// show the unsigned document no longer exists in the repository
-document = await repository.retrieveDocument(citation);
-console.log('document: ' + document);
+// retrieve the full contract from the repository
+const contract = await repository.retrieveContract(name);
+console.log('contract: ' + contract);
 console.log();
 };
 

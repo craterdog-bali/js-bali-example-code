@@ -29,6 +29,6 @@
   "dependencies": {
     "bali-component-framework": "^2.22.2",
     "bali-digital-notary": "^2.12.2",
-    "bali-document-repository": "^2.26.2"
+    "bali-document-repository": "^2.27.0"
   }
 }
